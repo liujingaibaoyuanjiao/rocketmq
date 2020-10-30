@@ -57,6 +57,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 log.info("Netty成功");
             }
             log.info(instruct + "==============" + domainController);
+        }else if(msg.contains("路由")){
+            JSONObject jsonObject = JSONObject.parseObject(msg);
+            String instruct = "约车"+ "04-" + jsonObject.get("upLon") + "," + jsonObject.get("upLat") + "-" + jsonObject.get("downLon") + "," + jsonObject.get("downLat") + "-" + jsonObject.get("parkLon") + "," + jsonObject.get("parkLat");
+            String domainController = jsonObject.get("domainController") + "";
+            boolean flag = sendNetty(null, instruct, domainController, "code", ctx);
+            if (flag) {
+                log.info("Netty成功");
+            }
+            log.info(instruct + "==============" + domainController);
         }
         ctx.close();
     }
